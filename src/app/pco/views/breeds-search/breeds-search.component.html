@@ -1,0 +1,57 @@
+<div class="mt-4">
+  <div class="row">
+    <div class="col">
+      <h1>Buscar razas de gatos</h1>
+    </div>
+    <div class="col d-flex justify-content-start align-items-center">
+      <a class="btn btn-primary" routerLink="/pco/breeds-list">Ir a lista de razas de gatos</a>
+    </div>
+    <div class="col d-flex justify-content-start align-items-center">
+      <a class="btn btn-primary" routerLink="/auth/login">Iniciar sesión</a>
+    </div>
+  </div>
+</div>
+<div class="row mt-4">
+  <form>
+    <div class="mb-3 row">
+      <div class="col-xs-3 col-sm-auto">
+        <input id="table-filtering-search" class="form-control" type="text" name="search-text" [(ngModel)]="text" />
+      </div>
+      <div class="col">
+        <button class="btn btn-primary" (click)="refreshBreeds()">Buscar</button>
+      </div>
+    </div>
+  </form>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Origen</th>
+        <th scope="col">Esperanza de vida</th>
+        <th scope="col">Temperamento</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let breed of breedsItems; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ breed.name }}</td>
+        <td>{{ breed.origin }}</td>
+        <td>{{ breed.life_span }}</td>
+        <td>{{ breed.temperament }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+      (pageChange)="refreshBreeds()">
+    </ngb-pagination>
+
+    <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshBreeds()">
+      <option [ngValue]="5">5 items per page</option>
+      <option [ngValue]="10">10 items per page</option>
+      <option [ngValue]="20">20 items per page</option>
+    </select>
+  </div>
+</div>
